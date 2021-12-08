@@ -1,4 +1,5 @@
 import 'package:esp32flutter_sample/view/widgets/airspeed_widget.dart';
+import 'package:esp32flutter_sample/view/widgets/device_status_widget.dart';
 import 'package:flutter/material.dart';
 
 class DataView extends StatelessWidget {
@@ -11,6 +12,7 @@ class DataView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           AirspeedWidget(),
+          DeviceStatusWidget(),
         ],
       ),
     );

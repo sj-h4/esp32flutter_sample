@@ -44,6 +44,12 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
   double elevator = 0.0;
   double rudder = 0.0;
 
+  @override
+  void dispose() {
+    print('esp32manager is disposed');
+    super.dispose();
+  }
+
   void startScan() {
     // TODO: Bluetoothのオンオフチェック
     flutterBlue.startScan(timeout: Duration(seconds: 4));
@@ -58,7 +64,7 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
       (results) {
         // do something with scan results
         for (ScanResult r in results) {
-          print(r.device.name);
+          print('device name: ${r.device.name}');
           deviceStatus = "scanning";
           state = state.copyWith(deviceStatus: "scanning");
 
@@ -99,6 +105,7 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
 
     this.targetDevice?.disconnect();
     this.isConnected = false;
+    flutterBlue.stopScan();
     state = state.copyWith(isConnected: false);
 
     deviceStatus = "disconnected";
@@ -116,7 +123,7 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
     List<BluetoothService>? services =
         await this.targetDevice?.discoverServices();
     for (BluetoothService s in services!) {
-      print("service UUID: s.uuid.toString");
+      print("service UUID: ${s.uuid}");
       if (s.uuid.toString() == serviceUuid) {
         s.characteristics.forEach((charactaristic) {
           print(charactaristic.uuid.toString());
@@ -129,9 +136,10 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
             print("cannot find characteristic");
           }
         });
+      } else {
+        print("cannot find service");
       }
     }
-    ;
   }
 
   void _recieveNotification() async {
@@ -190,6 +198,7 @@ II:ラダー操作量のデータ
       rotation = (value[2] * 256 + value[3]) / 10;
       rotation = rotation * 90 / 140; // ペラの回転数をクランクの回転数に変換
       airspeed = (value[4] * 256 + value[5]) / 1000;
+      print('$value');
       pitch = (value[7] * 256 + value[8]) / 10;
       if (value[6] == 0) {
         pitch *= -1;

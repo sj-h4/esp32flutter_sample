@@ -10,6 +10,11 @@ class SettingsView extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
+      home: Column(
+        children: [
+          Text('Settings Page'),
+        ],
+      ),
     );
   }
 }

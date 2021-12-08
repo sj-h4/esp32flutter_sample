@@ -3,10 +3,10 @@ class Esp32NameProfile {
 }
 
 class Esp32ServicesProfile {
-  static const String ESP32_SERVICE = "1db31f9a-9137-44da-9458-a4e642211773";
+  static const String ESP32_SERVICE = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 }
 
 class Esp32CharacteristicProfile {
   static const String ESP32DATA_CHARACTERISTIC =
-      "938e479a-6f42-4b73-ad28-b61898263d71";
+      "abcd1234-e1ba-e1ba-e1ba-123456789abc";
 }
