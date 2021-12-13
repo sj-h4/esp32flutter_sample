@@ -1,4 +1,4 @@
-import 'package:esp32flutter_sample/main.dart';
+import 'package:esp32flutter_sample/repositpry/provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +9,12 @@ class AirspeedWidget extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final esp32State = useProvider(esp32Provider);
+    final airspeedState = useProvider(airspeedProvider);
 
     return Center(
       child: Column(
         children: [
-          Text('Airspeed: ${esp32State.airspeed}'),
+          Text('Airspeed: ${airspeedState.state}'),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -31,7 +32,6 @@ class AirspeedWidget extends HookWidget {
                     context.read(esp32Provider.notifier).disconnectDevice();
                   } else {
                     context.read(esp32Provider.notifier).startScan();
-                    //context.read(pedalProvider.notifier).startScan();
                   }
                 },
               ),

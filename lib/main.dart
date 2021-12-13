@@ -1,5 +1,3 @@
-import 'package:esp32flutter_sample/repositpry/esp32/esp32_data.dart';
-import 'package:esp32flutter_sample/repositpry/esp32/esp32_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -12,9 +10,6 @@ enum TabType {
   data,
   setting,
 }
-
-final esp32Provider =
-    StateNotifierProvider<Esp32Manager, Esp32Data>((_) => Esp32Manager());
 
 void main() {
   runApp(

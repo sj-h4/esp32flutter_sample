@@ -7,6 +7,7 @@ import 'esp32_data.dart';
 import 'esp32_profile.dart';
 
 class Esp32Manager extends StateNotifier<Esp32Data> {
+  // TODO: singletonにする
   Esp32Manager()
       : super(Esp32Data(
             altitude: 0.0,
