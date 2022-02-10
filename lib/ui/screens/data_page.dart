@@ -1,3 +1,5 @@
+import 'package:esp32flutter_sample/ui/widgets/elevator.dart';
+import 'package:esp32flutter_sample/ui/widgets/rudder.dart';
 import 'package:flutter/material.dart';
 import 'package:esp32flutter_sample/ui/widgets/airspeed.dart';
 import 'package:esp32flutter_sample/ui/widgets/altitude.dart';
@@ -18,8 +20,9 @@ class DataPage extends StatelessWidget {
           Airspeed(),
           Altitude(),
           Rotation(),
-          Power(),
           AtitudeIndicator(),
+          Rudder(),
+          Elevator(),
           Esp32Status(),
         ],
       ),

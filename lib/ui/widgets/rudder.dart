@@ -1,12 +1,12 @@
 import 'widgets.dart';
-class Power extends HookConsumerWidget {
-  const Power({Key? key}) : super(key: key);
+class Rudder extends HookConsumerWidget {
+  const Rudder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final power = 0;  // TODO: 変える
+    final rudder = ref.watch(esp32ControllerProvider).rudder;
     return Text(
-      'power: $power',
+      'Rudder: $rudder',
       textAlign: TextAlign.center,
       overflow: TextOverflow.ellipsis,
       style: const TextStyle(fontWeight: FontWeight.bold),
