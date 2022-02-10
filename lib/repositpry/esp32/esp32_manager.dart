@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -6,31 +8,20 @@ import 'dart:async';
 import 'esp32_data.dart';
 import 'esp32_profile.dart';
 
-class Esp32Manager extends StateNotifier<Esp32Data> {
+class Esp32Repository {
   // TODO: singletonにする
-  Esp32Manager()
-      : super(Esp32Data(
-            altitude: 0.0,
-            rotation: 0.0,
-            airspeed: 0.0,
-            pitch: 0.0,
-            roll: 0.0,
-            deviceStatus: "No Device",
-            isConnected: false,
-            pitchColor: Colors.lightBlue,
-            trim: 0,
-            isPressed: false,
-            elevator: 90,
-            rudder: 90));
   final String deviceName = Esp32NameProfile.ESP32_NAME;
   final String serviceUuid = Esp32ServicesProfile.ESP32_SERVICE;
   final String characteristicUuid =
       Esp32CharacteristicProfile.ESP32DATA_CHARACTERISTIC;
   FlutterBlue flutterBlue = FlutterBlue.instance;
-  //SettingState settingState;
 
-  BluetoothDevice? targetDevice;
-  late BluetoothCharacteristic espCharacteristic;
+  late BluetoothDevice targetDevice;
+  late BluetoothCharacteristic esp32Characteristic;
+  late BluetoothService esp32Service;
+
+  final controller = StreamController<Esp32Data>();
+  Esp32Data _esp32 = Esp32Data(deviceStatus: "waiting", isConnected: false);
 
   double altitude = 0.0;
   double rotation = 0.0;
@@ -45,10 +36,8 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
   double elevator = 0.0;
   double rudder = 0.0;
 
-  @override
   void dispose() {
-    print('esp32manager is disposed');
-    super.dispose();
+    controller.close();
   }
 
   void startScan() {
@@ -66,15 +55,9 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
         // do something with scan results
         for (ScanResult r in results) {
           print('device name: ${r.device.name}');
-          deviceStatus = "scanning";
-          state = state.copyWith(deviceStatus: "scanning");
 
           if (r.device.name == this.deviceName) {
-            print("device is found");
-            this.isConnected = true;
-            state = state.copyWith(isConnected: true);
             this.targetDevice = r.device;
-            connectToDevice();
             flutterBlue.stopScan();
             break;
           }
@@ -85,67 +68,52 @@ class Esp32Manager extends StateNotifier<Esp32Data> {
 
   void connectToDevice() async {
     print("start connecting");
-    if (this.targetDevice == null) {
-      deviceStatus = "targetDevide is null";
-      state = state.copyWith(deviceStatus: "targetDevide is null");
-      return;
-    }
-
-    await this.targetDevice?.connect();
-    deviceStatus = "Connected: ${targetDevice?.name}";
-    state = state.copyWith(deviceStatus: "Connected: ${targetDevice?.name}");
-    print('connected');
-    this.targetDevice?.isDiscoveringServices.forEach((element) {
+    await this.targetDevice.connect();
+    this.targetDevice.isDiscoveringServices.forEach((element) {
       print("is discovering $element");
     });
-    discoverServices();
   }
 
   void disconnectDevice() {
-    if (this.targetDevice == null) return;
-
-    this.targetDevice?.disconnect();
-    this.isConnected = false;
+    this.targetDevice.disconnect();
     flutterBlue.stopScan();
-    state = state.copyWith(isConnected: false);
-
-    deviceStatus = "disconnected";
-    state = state.copyWith(deviceStatus: "disconnected");
     print("disconnected");
+    _esp32 = _esp32.copyWith(isConnected: false, deviceStatus: "waiting");
+    controller.sink.add(_esp32);
   }
 
-  void discoverServices() async {
-    if (this.targetDevice == null) return;
-    //print("discovering");
-    this.targetDevice?.isDiscoveringServices.forEach((element) {
-      //print("is discovering $element");
-    });
-
+  Future<bool> discoverServices() async {
     List<BluetoothService>? services =
-        await this.targetDevice?.discoverServices();
-    for (BluetoothService s in services!) {
+        await this.targetDevice.discoverServices();
+    for (BluetoothService s in services) {
       print("service UUID: ${s.uuid}");
       if (s.uuid.toString() == serviceUuid) {
-        s.characteristics.forEach((charactaristic) {
-          print(charactaristic.uuid.toString());
-
-          if (charactaristic.uuid.toString() == characteristicUuid) {
-            espCharacteristic = charactaristic;
-            print("connected service");
-            _recieveNotification();
-          } else {
-            print("cannot find characteristic");
-          }
-        });
-      } else {
-        print("cannot find service");
+        esp32Service = s;
+        return true;
       }
     }
+    print("cannot find service");
+    return false;
   }
 
-  void _recieveNotification() async {
+  Future<bool> discoverCharacteristics() async {
+    for (BluetoothCharacteristic charactaristic
+        in esp32Service.characteristics) {
+      print(charactaristic.uuid.toString());
+      if (charactaristic.uuid.toString() == characteristicUuid) {
+        esp32Characteristic = charactaristic;
+        _esp32 = _esp32.copyWith(
+            deviceStatus: "cannot discover services", isConnected: false);
+        controller.sink.add(_esp32);
+        return true;
+      }
+    }
+    print("cannot find characteristic");
+    return false;
+  }
+
+  void recieveNotification() async {
     print("start notify");
-    if (this.targetDevice == null) return;
 /*
 0xAAAABBBBCCCCDDDDDDEEEEEEFFFFGGHHII
 
@@ -193,8 +161,8 @@ II:ラダー操作量のデータ
 　 0xII = 0xB4なら左最大(ヌンチャク左傾け)
 */
     await Future.delayed(new Duration(milliseconds: 500));
-    await espCharacteristic.setNotifyValue(true);
-    espCharacteristic.value.listen((value) async {
+    await esp32Characteristic.setNotifyValue(true);
+    esp32Characteristic.value.listen((value) async {
       altitude = (value[0] * 256 + value[1]) / 100; // 単位をmに変換
       rotation = (value[2] * 256 + value[3]) / 10;
       rotation = rotation * 90 / 140; // ペラの回転数をクランクの回転数に変換
@@ -230,8 +198,7 @@ II:ラダー操作量のデータ
       } else {
         pitchColor = Colors.lightBlue;
       }
-
-      state = state.copyWith(
+      _esp32 = _esp32.copyWith(
           altitude: altitude,
           rotation: rotation,
           airspeed: airspeed,
@@ -242,25 +209,78 @@ II:ラダー操作量のデータ
           isPressed: isPressed,
           elevator: elevator,
           rudder: rudder);
+      controller.sink.add(_esp32);
+    });
+  }
+}
+
+class Esp32Manager extends StateNotifier<Esp32Data> {
+  Esp32Manager()
+      : super(Esp32Data(
+            altitude: 0.0,
+            rotation: 0.0,
+            airspeed: 0.0,
+            pitch: 0.0,
+            roll: 0.0,
+            deviceStatus: "No Device",
+            isConnected: false,
+            pitchColor: Colors.lightBlue,
+            trim: 0,
+            isPressed: false,
+            elevator: 90,
+            rudder: 90));
+  Esp32Repository esp32repository = Esp32Repository();
+
+  void disconnect() {
+    esp32repository.disconnectDevice();
+  }
+
+  void connect() async {
+    esp32repository.startScan();
+    await Future.delayed(Duration(milliseconds: 500));
+    esp32repository.connectToDevice();
+    var serviceStatus = await esp32repository.discoverServices();
+    if (serviceStatus) {
+      var characteristicStatus =
+          await esp32repository.discoverCharacteristics();
+      if (characteristicStatus) {
+        notify();
+      } else {
+        print("cannot discover characteristics");
+        state = state.copyWith(
+            deviceStatus: "cannot discover characteristics",
+            isConnected: false);
+      }
+    } else {
+      print("cannot discover services");
+      state = state.copyWith(
+          deviceStatus: "cannot discover services", isConnected: false);
+    }
+  }
+
+  void notify() {
+    print("start nt");
+    esp32repository.recieveNotification();
+    esp32repository.controller.stream.listen((event) {
+      state = state.copyWith(
+        altitude: event.altitude,
+        rotation: event.rotation,
+        airspeed: event.airspeed,
+        pitch: event.pitch,
+        roll: event.roll,
+        pitchColor: event.pitchColor,
+        trim: event.trim,
+        isPressed: event.isPressed,
+        elevator: event.elevator,
+        rudder: event.rudder,
+      );
     });
   }
 
-/*
-  Future<void> sendData() async {
-    String baseTfName = settingState.baseTfName;
-    int flightNum = settingState.flightNum;
-    String tfName = baseTfName + flightNum.toString();
-    while (settingState.isSending) {
-      final apiCliant = ApiCliant();
-
-      await Future.delayed(new Duration(milliseconds: 500));
-      apiCliant.postData(tfName, "altitude", altitude);
-      apiCliant.postData(tfName, "rotation", rotation);
-      apiCliant.postData(tfName, "airspeed", airspeed);
-      await Future.delayed(new Duration(milliseconds: 500));
-      apiCliant.postData(tfName, "pitch", pitch);
-      apiCliant.postData(tfName, "roll", roll);
-    }
+  void sendData() {
+    esp32repository.controller.stream.listen((event) {
+      print(event.altitude);
+      sleep(Duration(seconds: 1));
+    });
   }
-  */
 }

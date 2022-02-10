@@ -8,8 +8,8 @@ class AirspeedWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final esp32State = useProvider(esp32Provider);
     final airspeedState = useProvider(airspeedProvider);
+    final esp32IsConnected = useProvider(esp32IsConnecetedProvider);
 
     return Center(
       child: Column(
@@ -28,15 +28,24 @@ class AirspeedWidget extends HookWidget {
                   ),
                 ),
                 onPressed: () {
-                  if (esp32State.isConnected!) {
-                    context.read(esp32Provider.notifier).disconnectDevice();
-                  } else {
-                    context.read(esp32Provider.notifier).startScan();
-                  }
+                  context.read(esp32Provider.notifier).connect();
                 },
               ),
             ],
           ),
+          ElevatedButton(
+                child: const Text('send'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  context.read(esp32Provider.notifier).sendData();
+                },
+              ),
         ],
       ),
     );
