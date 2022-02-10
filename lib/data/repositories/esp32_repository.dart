@@ -165,16 +165,14 @@ II:ラダー操作量のデータ
 例: 0xII = 0x00なら右最大(ヌンチャク右傾け)
 　 0xII = 0xB4なら左最大(ヌンチャク左傾け)
 */
-    altitude = (value[0] * 256 + value[1]) / 100; // 単位をmに変換
-    rotation = (value[2] * 256 + value[3]) / 10;
-    // TODO: ギア比を確認する
-    rotation = rotation * 90 / 140; // ペラの回転数をクランクの回転数に変換
-    airspeed = (value[4] * 256 + value[5]) / 1000;
-    pitch = (value[7] * 256 + value[8]) / 10;
+    altitude = (value[0] * 256 + value[1]);
+    rotation = (value[2] * 256 + value[3]);
+    airspeed = (value[4] * 256 + value[5]);
+    pitch = (value[7] * 256 + value[8]);
     if (value[6] == 0) {
       pitch *= -1;
     }
-    roll = (value[10] * 256 + value[11]) / 10;
+    roll = (value[10] * 256 + value[11]);
     if (value[9] == 255) {
       roll *= -1;
     }
@@ -191,7 +189,7 @@ II:ラダー操作量のデータ
     }
     elevator = value[15].toDouble();
     rudder = value[16].toDouble();
-
+/*
     // ピッチに応じて画面の色を変える
     if (pitch >= 4) {
       pitchColor = Colors.red;
@@ -200,6 +198,7 @@ II:ラダー操作量のデータ
     } else {
       pitchColor = Colors.lightBlue;
     }
+*/
     esp32 = esp32.copyWith(
       altitude: altitude,
       rotation: rotation,
