@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'view/bottom_navogation_bar_view.dart';
+import 'ui/widgets/bottomnavigation.dart';
+
 
 final tabTypeProvider =
     AutoDisposeStateProvider<TabType>((ref) => TabType.data);
@@ -12,22 +13,22 @@ enum TabType {
 }
 
 void main() {
-  runApp(
-    ProviderScope(child: MyApp()),
-  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Test app for ESP32',
+      title: 'KUBTSS flight app',
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
+      initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/': (_) => BottomNavigationBarView(),
+        '/': (_) => const BottomNavigationBarPage(),
       },
     );
   }

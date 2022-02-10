@@ -1,17 +1,23 @@
-import 'package:esp32flutter_sample/main.dart';
+import 'package:esp32flutter_sample/ui/screens/data_page.dart';
+import 'package:esp32flutter_sample/ui/screens/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'dataview.dart';
-import 'settings_view.dart';
+final tabTypeProvider =
+    AutoDisposeStateProvider<TabType>((ref) => TabType.data);
 
-class BottomNavigationBarView extends HookWidget {
-  final _views = [DataView(), SettingsView()];
+enum TabType {
+  data,
+  setting,
+}
+
+class BottomNavigationBarPage extends HookConsumerWidget {
+  static const _views = [DataPage(), SettingPage()];
+  const BottomNavigationBarPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final tabType = useProvider(tabTypeProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tabType = ref.watch(tabTypeProvider.state);
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.white),
       home: Scaffold(
