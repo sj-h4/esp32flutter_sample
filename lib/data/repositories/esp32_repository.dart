@@ -114,6 +114,7 @@ class Esp32Repository {
   void _recieveNotification() async {
     await espCharacteristic.setNotifyValue(true);
     espCharacteristic.value.listen((value) async {
+      debugPrint("$value");
       esp32Raw2Esp32(value);
     });
   }
@@ -165,14 +166,14 @@ II:ラダー操作量のデータ
 例: 0xII = 0x00なら右最大(ヌンチャク右傾け)
 　 0xII = 0xB4なら左最大(ヌンチャク左傾け)
 */
-    altitude = (value[0] * 256 + value[1]);
-    rotation = (value[2] * 256 + value[3]);
-    airspeed = (value[4] * 256 + value[5]);
-    pitch = (value[7] * 256 + value[8]);
+    altitude = (value[0] * 256 + value[1]).toDouble();
+    rotation = (value[2] * 256 + value[3]).toDouble();
+    airspeed = (value[4] * 256 + value[5]).toDouble();
+    pitch = (value[7] * 256 + value[8]).toDouble();
     if (value[6] == 0) {
       pitch *= -1;
     }
-    roll = (value[10] * 256 + value[11]);
+    roll = (value[10] * 256 + value[11]).toDouble();
     if (value[9] == 255) {
       roll *= -1;
     }

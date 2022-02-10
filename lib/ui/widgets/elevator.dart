@@ -8,7 +8,7 @@ class Elevator extends HookConsumerWidget {
     final elevator = ref.watch(esp32ControllerProvider).elevator;
     final elevatorTrim = ref.watch(esp32ControllerProvider).trim;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
           'Elevator: $elevator',

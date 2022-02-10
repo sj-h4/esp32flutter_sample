@@ -24,6 +24,7 @@ class DataPage extends StatelessWidget {
           Rudder(),
           Elevator(),
           Esp32Status(),
+          Power(),
         ],
       ),
     );
