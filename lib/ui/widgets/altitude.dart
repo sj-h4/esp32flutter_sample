@@ -6,7 +6,7 @@ class Altitude extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final altitude = ref.watch(esp32ControllerProvider).altitude;
     return Text(
-      '$altitude',
+      'Altitude: $altitude',
       textAlign: TextAlign.center,
       overflow: TextOverflow.ellipsis,
       style: const TextStyle(fontWeight: FontWeight.bold),

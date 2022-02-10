@@ -6,7 +6,7 @@ class Airspeed extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final airspeed = ref.watch(esp32ControllerProvider).airspeed;
     return Text(
-      '$airspeed',
+      'Airspeed: $airspeed',
       textAlign: TextAlign.center,
       overflow: TextOverflow.ellipsis,
       style: const TextStyle(fontWeight: FontWeight.bold),
