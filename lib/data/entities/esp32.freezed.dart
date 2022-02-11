@@ -1,7 +1,9 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'esp32_data.dart';
+part of 'esp32.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,23 +15,23 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$Esp32DataTearOff {
-  const _$Esp32DataTearOff();
+class _$Esp32TearOff {
+  const _$Esp32TearOff();
 
-  _Esp32Data call(
+  _Esp32 call(
       {double? altitude,
       double? rotation,
       double? airspeed,
       double? pitch,
       double? roll,
       String? deviceStatus,
-      bool? isConnected,
+      bool isConnected = false,
       Color? pitchColor,
       double? trim,
       bool? isPressed,
       double? elevator,
       double? rudder}) {
-    return _Esp32Data(
+    return _Esp32(
       altitude: altitude,
       rotation: rotation,
       airspeed: airspeed,
@@ -47,17 +49,17 @@ class _$Esp32DataTearOff {
 }
 
 /// @nodoc
-const $Esp32Data = _$Esp32DataTearOff();
+const $Esp32 = _$Esp32TearOff();
 
 /// @nodoc
-mixin _$Esp32Data {
+mixin _$Esp32 {
   double? get altitude => throw _privateConstructorUsedError;
   double? get rotation => throw _privateConstructorUsedError;
   double? get airspeed => throw _privateConstructorUsedError;
   double? get pitch => throw _privateConstructorUsedError;
   double? get roll => throw _privateConstructorUsedError;
   String? get deviceStatus => throw _privateConstructorUsedError;
-  bool? get isConnected => throw _privateConstructorUsedError;
+  bool get isConnected => throw _privateConstructorUsedError;
   Color? get pitchColor => throw _privateConstructorUsedError;
   double? get trim => throw _privateConstructorUsedError;
   bool? get isPressed => throw _privateConstructorUsedError;
@@ -65,14 +67,13 @@ mixin _$Esp32Data {
   double? get rudder => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $Esp32DataCopyWith<Esp32Data> get copyWith =>
-      throw _privateConstructorUsedError;
+  $Esp32CopyWith<Esp32> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $Esp32DataCopyWith<$Res> {
-  factory $Esp32DataCopyWith(Esp32Data value, $Res Function(Esp32Data) then) =
-      _$Esp32DataCopyWithImpl<$Res>;
+abstract class $Esp32CopyWith<$Res> {
+  factory $Esp32CopyWith(Esp32 value, $Res Function(Esp32) then) =
+      _$Esp32CopyWithImpl<$Res>;
   $Res call(
       {double? altitude,
       double? rotation,
@@ -80,7 +81,7 @@ abstract class $Esp32DataCopyWith<$Res> {
       double? pitch,
       double? roll,
       String? deviceStatus,
-      bool? isConnected,
+      bool isConnected,
       Color? pitchColor,
       double? trim,
       bool? isPressed,
@@ -89,12 +90,12 @@ abstract class $Esp32DataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$Esp32DataCopyWithImpl<$Res> implements $Esp32DataCopyWith<$Res> {
-  _$Esp32DataCopyWithImpl(this._value, this._then);
+class _$Esp32CopyWithImpl<$Res> implements $Esp32CopyWith<$Res> {
+  _$Esp32CopyWithImpl(this._value, this._then);
 
-  final Esp32Data _value;
+  final Esp32 _value;
   // ignore: unused_field
-  final $Res Function(Esp32Data) _then;
+  final $Res Function(Esp32) _then;
 
   @override
   $Res call({
@@ -139,7 +140,7 @@ class _$Esp32DataCopyWithImpl<$Res> implements $Esp32DataCopyWith<$Res> {
       isConnected: isConnected == freezed
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       pitchColor: pitchColor == freezed
           ? _value.pitchColor
           : pitchColor // ignore: cast_nullable_to_non_nullable
@@ -165,10 +166,9 @@ class _$Esp32DataCopyWithImpl<$Res> implements $Esp32DataCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$Esp32DataCopyWith<$Res> implements $Esp32DataCopyWith<$Res> {
-  factory _$Esp32DataCopyWith(
-          _Esp32Data value, $Res Function(_Esp32Data) then) =
-      __$Esp32DataCopyWithImpl<$Res>;
+abstract class _$Esp32CopyWith<$Res> implements $Esp32CopyWith<$Res> {
+  factory _$Esp32CopyWith(_Esp32 value, $Res Function(_Esp32) then) =
+      __$Esp32CopyWithImpl<$Res>;
   @override
   $Res call(
       {double? altitude,
@@ -177,7 +177,7 @@ abstract class _$Esp32DataCopyWith<$Res> implements $Esp32DataCopyWith<$Res> {
       double? pitch,
       double? roll,
       String? deviceStatus,
-      bool? isConnected,
+      bool isConnected,
       Color? pitchColor,
       double? trim,
       bool? isPressed,
@@ -186,13 +186,13 @@ abstract class _$Esp32DataCopyWith<$Res> implements $Esp32DataCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$Esp32DataCopyWithImpl<$Res> extends _$Esp32DataCopyWithImpl<$Res>
-    implements _$Esp32DataCopyWith<$Res> {
-  __$Esp32DataCopyWithImpl(_Esp32Data _value, $Res Function(_Esp32Data) _then)
-      : super(_value, (v) => _then(v as _Esp32Data));
+class __$Esp32CopyWithImpl<$Res> extends _$Esp32CopyWithImpl<$Res>
+    implements _$Esp32CopyWith<$Res> {
+  __$Esp32CopyWithImpl(_Esp32 _value, $Res Function(_Esp32) _then)
+      : super(_value, (v) => _then(v as _Esp32));
 
   @override
-  _Esp32Data get _value => super._value as _Esp32Data;
+  _Esp32 get _value => super._value as _Esp32;
 
   @override
   $Res call({
@@ -209,7 +209,7 @@ class __$Esp32DataCopyWithImpl<$Res> extends _$Esp32DataCopyWithImpl<$Res>
     Object? elevator = freezed,
     Object? rudder = freezed,
   }) {
-    return _then(_Esp32Data(
+    return _then(_Esp32(
       altitude: altitude == freezed
           ? _value.altitude
           : altitude // ignore: cast_nullable_to_non_nullable
@@ -237,7 +237,7 @@ class __$Esp32DataCopyWithImpl<$Res> extends _$Esp32DataCopyWithImpl<$Res>
       isConnected: isConnected == freezed
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       pitchColor: pitchColor == freezed
           ? _value.pitchColor
           : pitchColor // ignore: cast_nullable_to_non_nullable
@@ -264,15 +264,15 @@ class __$Esp32DataCopyWithImpl<$Res> extends _$Esp32DataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Esp32Data with DiagnosticableTreeMixin implements _Esp32Data {
-  const _$_Esp32Data(
+class _$_Esp32 with DiagnosticableTreeMixin implements _Esp32 {
+  const _$_Esp32(
       {this.altitude,
       this.rotation,
       this.airspeed,
       this.pitch,
       this.roll,
       this.deviceStatus,
-      this.isConnected,
+      this.isConnected = false,
       this.pitchColor,
       this.trim,
       this.isPressed,
@@ -291,8 +291,9 @@ class _$_Esp32Data with DiagnosticableTreeMixin implements _Esp32Data {
   final double? roll;
   @override
   final String? deviceStatus;
+  @JsonKey()
   @override
-  final bool? isConnected;
+  final bool isConnected;
   @override
   final Color? pitchColor;
   @override
@@ -306,14 +307,14 @@ class _$_Esp32Data with DiagnosticableTreeMixin implements _Esp32Data {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Esp32Data(altitude: $altitude, rotation: $rotation, airspeed: $airspeed, pitch: $pitch, roll: $roll, deviceStatus: $deviceStatus, isConnected: $isConnected, pitchColor: $pitchColor, trim: $trim, isPressed: $isPressed, elevator: $elevator, rudder: $rudder)';
+    return 'Esp32(altitude: $altitude, rotation: $rotation, airspeed: $airspeed, pitch: $pitch, roll: $roll, deviceStatus: $deviceStatus, isConnected: $isConnected, pitchColor: $pitchColor, trim: $trim, isPressed: $isPressed, elevator: $elevator, rudder: $rudder)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Esp32Data'))
+      ..add(DiagnosticsProperty('type', 'Esp32'))
       ..add(DiagnosticsProperty('altitude', altitude))
       ..add(DiagnosticsProperty('rotation', rotation))
       ..add(DiagnosticsProperty('airspeed', airspeed))
@@ -331,104 +332,87 @@ class _$_Esp32Data with DiagnosticableTreeMixin implements _Esp32Data {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Esp32Data &&
-            (identical(other.altitude, altitude) ||
-                const DeepCollectionEquality()
-                    .equals(other.altitude, altitude)) &&
-            (identical(other.rotation, rotation) ||
-                const DeepCollectionEquality()
-                    .equals(other.rotation, rotation)) &&
-            (identical(other.airspeed, airspeed) ||
-                const DeepCollectionEquality()
-                    .equals(other.airspeed, airspeed)) &&
-            (identical(other.pitch, pitch) ||
-                const DeepCollectionEquality().equals(other.pitch, pitch)) &&
-            (identical(other.roll, roll) ||
-                const DeepCollectionEquality().equals(other.roll, roll)) &&
-            (identical(other.deviceStatus, deviceStatus) ||
-                const DeepCollectionEquality()
-                    .equals(other.deviceStatus, deviceStatus)) &&
-            (identical(other.isConnected, isConnected) ||
-                const DeepCollectionEquality()
-                    .equals(other.isConnected, isConnected)) &&
-            (identical(other.pitchColor, pitchColor) ||
-                const DeepCollectionEquality()
-                    .equals(other.pitchColor, pitchColor)) &&
-            (identical(other.trim, trim) ||
-                const DeepCollectionEquality().equals(other.trim, trim)) &&
-            (identical(other.isPressed, isPressed) ||
-                const DeepCollectionEquality()
-                    .equals(other.isPressed, isPressed)) &&
-            (identical(other.elevator, elevator) ||
-                const DeepCollectionEquality()
-                    .equals(other.elevator, elevator)) &&
-            (identical(other.rudder, rudder) ||
-                const DeepCollectionEquality().equals(other.rudder, rudder)));
+        (other.runtimeType == runtimeType &&
+            other is _Esp32 &&
+            const DeepCollectionEquality().equals(other.altitude, altitude) &&
+            const DeepCollectionEquality().equals(other.rotation, rotation) &&
+            const DeepCollectionEquality().equals(other.airspeed, airspeed) &&
+            const DeepCollectionEquality().equals(other.pitch, pitch) &&
+            const DeepCollectionEquality().equals(other.roll, roll) &&
+            const DeepCollectionEquality()
+                .equals(other.deviceStatus, deviceStatus) &&
+            const DeepCollectionEquality()
+                .equals(other.isConnected, isConnected) &&
+            const DeepCollectionEquality()
+                .equals(other.pitchColor, pitchColor) &&
+            const DeepCollectionEquality().equals(other.trim, trim) &&
+            const DeepCollectionEquality().equals(other.isPressed, isPressed) &&
+            const DeepCollectionEquality().equals(other.elevator, elevator) &&
+            const DeepCollectionEquality().equals(other.rudder, rudder));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(altitude) ^
-      const DeepCollectionEquality().hash(rotation) ^
-      const DeepCollectionEquality().hash(airspeed) ^
-      const DeepCollectionEquality().hash(pitch) ^
-      const DeepCollectionEquality().hash(roll) ^
-      const DeepCollectionEquality().hash(deviceStatus) ^
-      const DeepCollectionEquality().hash(isConnected) ^
-      const DeepCollectionEquality().hash(pitchColor) ^
-      const DeepCollectionEquality().hash(trim) ^
-      const DeepCollectionEquality().hash(isPressed) ^
-      const DeepCollectionEquality().hash(elevator) ^
-      const DeepCollectionEquality().hash(rudder);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(altitude),
+      const DeepCollectionEquality().hash(rotation),
+      const DeepCollectionEquality().hash(airspeed),
+      const DeepCollectionEquality().hash(pitch),
+      const DeepCollectionEquality().hash(roll),
+      const DeepCollectionEquality().hash(deviceStatus),
+      const DeepCollectionEquality().hash(isConnected),
+      const DeepCollectionEquality().hash(pitchColor),
+      const DeepCollectionEquality().hash(trim),
+      const DeepCollectionEquality().hash(isPressed),
+      const DeepCollectionEquality().hash(elevator),
+      const DeepCollectionEquality().hash(rudder));
 
   @JsonKey(ignore: true)
   @override
-  _$Esp32DataCopyWith<_Esp32Data> get copyWith =>
-      __$Esp32DataCopyWithImpl<_Esp32Data>(this, _$identity);
+  _$Esp32CopyWith<_Esp32> get copyWith =>
+      __$Esp32CopyWithImpl<_Esp32>(this, _$identity);
 }
 
-abstract class _Esp32Data implements Esp32Data {
-  const factory _Esp32Data(
+abstract class _Esp32 implements Esp32 {
+  const factory _Esp32(
       {double? altitude,
       double? rotation,
       double? airspeed,
       double? pitch,
       double? roll,
       String? deviceStatus,
-      bool? isConnected,
+      bool isConnected,
       Color? pitchColor,
       double? trim,
       bool? isPressed,
       double? elevator,
-      double? rudder}) = _$_Esp32Data;
+      double? rudder}) = _$_Esp32;
 
   @override
-  double? get altitude => throw _privateConstructorUsedError;
+  double? get altitude;
   @override
-  double? get rotation => throw _privateConstructorUsedError;
+  double? get rotation;
   @override
-  double? get airspeed => throw _privateConstructorUsedError;
+  double? get airspeed;
   @override
-  double? get pitch => throw _privateConstructorUsedError;
+  double? get pitch;
   @override
-  double? get roll => throw _privateConstructorUsedError;
+  double? get roll;
   @override
-  String? get deviceStatus => throw _privateConstructorUsedError;
+  String? get deviceStatus;
   @override
-  bool? get isConnected => throw _privateConstructorUsedError;
+  bool get isConnected;
   @override
-  Color? get pitchColor => throw _privateConstructorUsedError;
+  Color? get pitchColor;
   @override
-  double? get trim => throw _privateConstructorUsedError;
+  double? get trim;
   @override
-  bool? get isPressed => throw _privateConstructorUsedError;
+  bool? get isPressed;
   @override
-  double? get elevator => throw _privateConstructorUsedError;
+  double? get elevator;
   @override
-  double? get rudder => throw _privateConstructorUsedError;
+  double? get rudder;
   @override
   @JsonKey(ignore: true)
-  _$Esp32DataCopyWith<_Esp32Data> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$Esp32CopyWith<_Esp32> get copyWith => throw _privateConstructorUsedError;
 }
