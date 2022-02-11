@@ -5,11 +5,24 @@ class Rotation extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final rotation = ref.watch(esp32ControllerProvider).rotation;
-    return Text(
-      'rotation: $rotation',
-      textAlign: TextAlign.center,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(fontWeight: FontWeight.bold),
+    return Card(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Rotation',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          Text(
+            '$rotation',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+        ],
+      ),
     );
   }
 }

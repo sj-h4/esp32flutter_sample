@@ -7,20 +7,50 @@ class Elevator extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final elevator = ref.watch(esp32ControllerProvider).elevator;
     final elevatorTrim = ref.watch(esp32ControllerProvider).trim;
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(
-          'Elevator: $elevator',
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        Card(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Elevator',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              Text(
+                '$elevator',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ],
+          ),
         ),
-        Text(
-          'Elevator Trim: $elevatorTrim',
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        Card(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'ElevatorTrim',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              Text(
+                '$elevatorTrim',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ],
+          ),
         ),
       ],
     );

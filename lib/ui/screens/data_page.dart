@@ -13,20 +13,31 @@ class DataPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Airspeed(),
-          Altitude(),
-          Rotation(),
-          AtitudeIndicator(),
-          Rudder(),
-          Elevator(),
-          Esp32Status(),
-          Power(),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ESP32 DATA'),
       ),
+      body: const _BuildSettingPage(),
+    );
+  }
+}
+
+class _BuildSettingPage extends StatelessWidget {
+  const _BuildSettingPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: const <Widget>[
+        Airspeed(),
+        Altitude(),
+        Rotation(),
+        AtitudeIndicator(),
+        Rudder(),
+        Elevator(),
+        Power(),
+      ],
     );
   }
 }
