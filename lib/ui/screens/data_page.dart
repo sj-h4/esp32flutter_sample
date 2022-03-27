@@ -1,4 +1,5 @@
 import 'package:esp32flutter_sample/ui/widgets/elevator.dart';
+import 'package:esp32flutter_sample/ui/widgets/esp32_button.dart';
 import 'package:esp32flutter_sample/ui/widgets/rudder.dart';
 import 'package:flutter/material.dart';
 import 'package:esp32flutter_sample/ui/widgets/airspeed.dart';
@@ -29,7 +30,7 @@ class _BuildSettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(20),
-      children: const <Widget>[
+      children: <Widget>[
         Airspeed(),
         Altitude(),
         Rotation(),
@@ -37,6 +38,17 @@ class _BuildSettingPage extends StatelessWidget {
         Rudder(),
         Elevator(),
         Power(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "ESP32",
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            const Esp32Status(),
+            const Esp32Button(),
+          ],
+        ),
       ],
     );
   }

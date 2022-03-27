@@ -22,16 +22,9 @@ class _BuildSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(padding: const EdgeInsets.all(10), children: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Text(
-            "ESP32",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          const Esp32Status(),
-          const Esp32Button(),
-        ],
+      Text(
+        "This is setting page.",
+        style: Theme.of(context).textTheme.headline6,
       ),
     ]);
   }
