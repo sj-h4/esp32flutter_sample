@@ -1,5 +1,3 @@
 # esp32flutter_sample
 
 ESP32とBLE通信を行うサンプルアプリ
-
-ESP32の仕様は京バ2021年度と同じです
