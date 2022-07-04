@@ -45,16 +45,14 @@ class Esp32Repository {
     debugPrint("disconnected");
   }
 
-  void startScan() {
+  Stream<List<ScanResult>> startScan() {
     flutterBlue.startScan(timeout: const Duration(seconds: 4));
-    if (isConnected) {
-      disconnectDevice();
-      return;
-    }
     esp32 = esp32.copyWith(deviceStatus: "scanning", isConnected: false);
-    if (!esp32StreamController.isClosed) {
+    /*if (!esp32StreamController.isClosed) {
       esp32StreamController.sink.add(esp32);
-    }
+    }*/
+    return flutterBlue.scanResults;
+    /*
     // Listen to scan results
     flutterBlue.scanResults.listen(
       (results) {
@@ -74,13 +72,13 @@ class Esp32Repository {
         }
       },
     );
+    */
   }
 
-  void connectToDevice() async {
-    debugPrint("start connecting");
+  void connectToDevice(BluetoothDevice targetDevice) async {
     await targetDevice.connect();
     debugPrint('connected');
-    discoverServices();
+    // discoverServices();
   }
 
   void discoverServices() async {
@@ -111,12 +109,9 @@ class Esp32Repository {
     }
   }
 
-  void _recieveNotification() async {
+  Stream<List<int>> _recieveNotification() async* {
     await espCharacteristic.setNotifyValue(true);
-    espCharacteristic.value.listen((value) async {
-      debugPrint("$value");
-      esp32Raw2Esp32(value);
-    });
+    yield* espCharacteristic.value;
   }
 
   void esp32Raw2Esp32(value) {
