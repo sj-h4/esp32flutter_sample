@@ -47,7 +47,6 @@ class Esp32Controller extends StateNotifier<Esp32> {
         rudder: esp32Data.rudder,
       );
     });
-    esp32repository.startScan();
   }
 
   void disconnectEsp32() {
