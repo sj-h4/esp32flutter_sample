@@ -1,7 +1,42 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'repositories.dart';
 import 'dart:async';
 import 'package:esp32flutter_sample/data/entities/esp32.dart';
 import 'package:esp32flutter_sample/data/entities/esp32_profile.dart';
+
+final esp32RepositoryProvider = Provider<Esp32Repository>((ref) {
+  return Esp32Repository();
+});
+final scanResultsProvider = StreamProvider((ref) {
+  return ref.watch(esp32RepositoryProvider).startScan();
+});
+final esp32InScanResultProvider = Provider<BluetoothDevice?>((ref) {
+  final scanResults = ref.watch(scanResultsProvider.stream);
+  BluetoothDevice? esp32;
+  scanResults.listen((results) {
+    for (ScanResult result in results) {
+      if (result.device.name == 'ESP32') {
+        esp32 = result.device;
+      }
+    }
+  });
+  return esp32;
+});
+final esp32DeviceProvider = StateProvider<BluetoothDevice?>((ref) {
+  return null;
+});
+final esp32StateProvider = StreamProvider((ref) {
+  final esp32Device = ref.watch(esp32DeviceProvider);
+  return esp32Device!.state;
+});
+final isConnectedProvider = FutureProvider<bool>((ref) async {
+  final esp32State = await ref.watch(esp32StateProvider.future);
+  if (esp32State == BluetoothDeviceState.connected) {
+    return true;
+  }
+  return false;
+});
 
 class Esp32Repository {
   Esp32Repository() : super();
@@ -75,30 +110,31 @@ class Esp32Repository {
     */
   }
 
-  void connectToDevice(BluetoothDevice targetDevice) async {
-    await targetDevice.connect();
+  Future<void> connectToEsp32(BluetoothDevice device) async {
+    await device.connect();
     debugPrint('connected');
     // discoverServices();
   }
 
-  void discoverServices() async {
-    List<BluetoothService>? services = await targetDevice.discoverServices();
+  Future<BluetoothCharacteristic?> discoverServices(
+      BluetoothDevice device) async {
+    List<BluetoothService>? services = await device.discoverServices();
     for (BluetoothService s in services) {
-      debugPrint("service UUID: ${s.uuid}");
       if (s.uuid.toString() == serviceUuid) {
         for (var charactaristic in s.characteristics) {
           debugPrint(charactaristic.uuid.toString());
-
           if (charactaristic.uuid.toString() == characteristicUuid) {
             espCharacteristic = charactaristic;
             debugPrint("connected service");
+            /*
             esp32 = esp32.copyWith(
                 deviceStatus: "Connected: ${targetDevice.name}",
                 isConnected: true);
             if (!esp32StreamController.isClosed) {
               esp32StreamController.sink.add(esp32);
             }
-            _recieveNotification();
+            */
+            return charactaristic;
           } else {
             debugPrint("cannot find characteristic");
           }
@@ -107,14 +143,16 @@ class Esp32Repository {
         debugPrint("cannot find service");
       }
     }
+    return null;
   }
 
-  Stream<List<int>> _recieveNotification() async* {
-    await espCharacteristic.setNotifyValue(true);
-    yield* espCharacteristic.value;
+  Stream<List<int>> recieveNotification(
+      BluetoothCharacteristic characteristic) async* {
+    await characteristic.setNotifyValue(true);
+    yield* characteristic.value;
   }
 
-  void esp32Raw2Esp32(value) {
+  Esp32 esp32Raw2Esp32(value) {
 /*
 0xAAAABBBBCCCCDDDDDDEEEEEEFFFFGGHHII
 
@@ -195,7 +233,7 @@ II:ラダー操作量のデータ
       pitchColor = Colors.lightBlue;
     }
 */
-    esp32 = esp32.copyWith(
+    return Esp32(
       altitude: altitude,
       rotation: rotation,
       airspeed: airspeed,
@@ -207,8 +245,5 @@ II:ラダー操作量のデータ
       elevator: elevator,
       rudder: rudder,
     );
-    if (!esp32StreamController.isClosed) {
-      esp32StreamController.sink.add(esp32);
-    }
   }
 }
