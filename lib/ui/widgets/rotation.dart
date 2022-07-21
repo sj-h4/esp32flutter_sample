@@ -1,10 +1,10 @@
 import 'widgets.dart';
-class Rotation extends HookConsumerWidget {
-  const Rotation({Key? key}) : super(key: key);
 
+class Rotation extends HookConsumerWidget {
+  const Rotation(this.rotation, {Key? key}) : super(key: key);
+  final double rotation;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rotation = ref.watch(esp32ControllerProvider).rotation;
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

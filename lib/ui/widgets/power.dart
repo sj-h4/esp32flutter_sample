@@ -1,11 +1,10 @@
 import 'widgets.dart';
 
-class Power extends HookConsumerWidget {
-  const Power({Key? key}) : super(key: key);
-
+class ButtonPressed extends HookConsumerWidget {
+  const ButtonPressed(this.isPressed, {Key? key}) : super(key: key);
+  final bool isPressed;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPressed = ref.watch(esp32ControllerProvider).isPressed;
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

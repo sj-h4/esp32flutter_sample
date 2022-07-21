@@ -1,11 +1,11 @@
 import 'widgets.dart';
 
 class Airspeed extends HookConsumerWidget {
-  const Airspeed({Key? key}) : super(key: key);
+  const Airspeed(this.airspeed, {Key? key}) : super(key: key);
+  final double airspeed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final airspeed = ref.watch(esp32ControllerProvider).airspeed;
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -16,7 +16,7 @@ class Airspeed extends HookConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-           Text(
+          Text(
             '$airspeed',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
