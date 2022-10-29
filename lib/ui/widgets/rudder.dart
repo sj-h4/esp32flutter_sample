@@ -1,10 +1,10 @@
 import 'widgets.dart';
-class Rudder extends HookConsumerWidget {
-  const Rudder({Key? key}) : super(key: key);
 
+class Rudder extends HookConsumerWidget {
+  const Rudder(this.rudder, {Key? key}) : super(key: key);
+  final double rudder;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rudder = ref.watch(esp32ControllerProvider).rudder;
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

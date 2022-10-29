@@ -1,4 +1,7 @@
+import 'package:esp32flutter_sample/data/repositories/esp32_repository.dart';
+
 import 'widgets.dart';
+
 class Esp32Button extends HookConsumerWidget {
   const Esp32Button({Key? key}) : super(key: key);
 
@@ -14,8 +17,8 @@ class Esp32Button extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      onPressed: () {
-        if (isConnected) {
+      onPressed: () async {
+        if (await ref.watch(isConnectedProvider.future)) {
           ref.read(esp32ControllerProvider.notifier).disconnectEsp32();
         } else {
           ref.read(esp32ControllerProvider.notifier).getEsp32Data();

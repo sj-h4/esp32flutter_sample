@@ -1,11 +1,11 @@
 import 'widgets.dart';
 
 class Altitude extends HookConsumerWidget {
-  const Altitude({Key? key}) : super(key: key);
+  const Altitude(this.altitude, {Key? key}) : super(key: key);
+  final double altitude;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final altitude = ref.watch(esp32ControllerProvider).altitude;
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

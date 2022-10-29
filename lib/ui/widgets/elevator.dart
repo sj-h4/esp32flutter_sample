@@ -1,12 +1,12 @@
 import 'widgets.dart';
 
 class Elevator extends HookConsumerWidget {
-  const Elevator({Key? key}) : super(key: key);
-
+  const Elevator(this.elevator, this.elevatorTrim, {Key? key})
+      : super(key: key);
+  final double elevator;
+  final double elevatorTrim;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final elevator = ref.watch(esp32ControllerProvider).elevator;
-    final elevatorTrim = ref.watch(esp32ControllerProvider).trim;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
