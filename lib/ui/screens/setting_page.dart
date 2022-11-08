@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:esp32flutter_sample/ui/widgets/esp32_button.dart';
-import 'package:esp32flutter_sample/ui/widgets/esp32_status.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({Key? key}) : super(key: key);

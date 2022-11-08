@@ -1,5 +1,3 @@
-import 'package:flutter_blue/flutter_blue.dart';
-
 import 'controllers.dart';
 import 'package:esp32flutter_sample/data/entities/esp32.dart';
 import 'package:esp32flutter_sample/data/repositories/esp32_repository.dart';
